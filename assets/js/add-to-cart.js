@@ -1,90 +1,56 @@
-(function () {
-  'use strict';
+document.addEventListener('DOMContentLoaded', function () {
+  var cfg = window.freeioServiceCart;
+  if (!cfg || !cfg.ajaxUrl) return;
 
-  var config = window.freeioServiceCart || {};
-  if (!config.ajaxUrl) return;
+  document.querySelectorAll('.freeio-add-to-cart-form').forEach(function (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
 
-  var FORM_SELECTOR = '.freeio-add-to-cart-form';
-  var COUNT_SELECTOR = '.freeio-cart-link-count';
-  var ADDING_CLASS = 'freeio-adding';
-  var ADDED_CLASS = 'freeio-added';
+      var btn = form.querySelector('button[type="submit"]');
+      if (!btn || btn.dataset.busy === '1') return;
+      btn.dataset.busy = '1';
+      btn.disabled = true;
 
-  function updateCartCounts(count) {
-    var counters = document.querySelectorAll(COUNT_SELECTOR);
-    for (var i = 0; i < counters.length; i++) {
-      counters[i].textContent = String(count);
-    }
-  }
+      var span = btn.querySelector('.freeio-btn-text');
+      if (span) span.textContent = cfg.addingText || 'Adding…';
 
-  function showButtonFeedback(button, success) {
-    var cls = success ? ADDED_CLASS : '';
-    button.classList.remove(ADDING_CLASS);
-    if (cls) {
-      button.classList.add(cls);
-      setTimeout(function () { button.classList.remove(cls); }, 1500);
-    }
-  }
+      var body = new FormData(form);
+      body.set('action', cfg.action);
 
-  function handleSubmit(e) {
-    e.preventDefault();
+      fetch(cfg.ajaxUrl, { method: 'POST', credentials: 'same-origin', body: body })
+        .then(function (r) { return r.json(); })
+        .then(function (res) {
+          var d = res.data || {};
 
-    var form = e.target;
-    var button = form.querySelector('button[type="submit"]');
-    if (!button || button.classList.contains(ADDING_CLASS)) return;
+          if (d.cart_count !== undefined) {
+            document.querySelectorAll('.freeio-cart-link-count').forEach(function (el) {
+              el.textContent = d.cart_count;
+            });
+          }
 
-    var originalText = button.textContent;
-    button.classList.add(ADDING_CLASS);
-    button.disabled = true;
-    if (config.addingText) {
-      button.textContent = config.addingText;
-    }
+          if (res.success) {
+            var url = d.cart_url || form.getAttribute('data-cart-url') || '/';
+            var text = cfg.viewCartText || 'View cart';
 
-    var data = new FormData(form);
-    data.set('action', config.action);
-
-    fetch(config.ajaxUrl, {
-      method: 'POST',
-      credentials: 'same-origin',
-      body: data,
-    })
-      .then(function (res) { return res.json(); })
-      .then(function (json) {
-        var payload = json.data || {};
-        var count = typeof payload.cart_count !== 'undefined' ? payload.cart_count : null;
-
-        if (count !== null) {
-          updateCartCounts(count);
-        }
-
-        button.textContent = json.success
-          ? (config.addedText || originalText)
-          : (payload.message || originalText);
-
-        showButtonFeedback(button, json.success);
-
-        setTimeout(function () {
-          button.textContent = originalText;
-          button.disabled = false;
-        }, 1500);
-      })
-      .catch(function () {
-        button.textContent = originalText;
-        button.disabled = false;
-        button.classList.remove(ADDING_CLASS);
-        form.submit();
-      });
-  }
-
-  function init() {
-    var forms = document.querySelectorAll(FORM_SELECTOR);
-    for (var i = 0; i < forms.length; i++) {
-      forms[i].addEventListener('submit', handleSubmit);
-    }
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-})();
+            // заменяем кнопку ссылкой
+            var a = document.createElement('a');
+            a.href = url;
+            a.className = 'button product_type_simple add_to_cart_button freeio-view-cart-btn';
+            a.innerHTML = '<span class="freeio-btn-text">' + text + '</span>' +
+              '<i class="flaticon-right-up next"></i>';
+            btn.parentNode.insertBefore(a, btn);
+            btn.style.display = 'none';
+          } else {
+            if (span) span.textContent = d.message || 'Error';
+            btn.disabled = false;
+            btn.dataset.busy = '';
+          }
+        })
+        .catch(function () {
+          btn.disabled = false;
+          btn.dataset.busy = '';
+          if (span) span.textContent = cfg.addingText || 'Add to cart';
+        });
+    });
+  });
+});

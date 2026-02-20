@@ -177,13 +177,12 @@ final class Service_Cart {
         wp_localize_script('freeio-add-to-cart', 'freeioServiceCart', [
             'ajaxUrl' => admin_url('admin-ajax.php'),
             'action' => ADD_TO_CART_ACTION,
-            'nonce' => wp_create_nonce(NONCE_ACTION),
             'addingText' => __('Добавляем…', 'freeio-wc-service-cart'),
-            'addedText' => __('Добавлено!', 'freeio-wc-service-cart'),
+            'viewCartText' => __('Смотреть корзину', 'freeio-wc-service-cart'),
         ]);
     }
 
-    private const CART_ICON_SVG = '<svg class="freeio-cart-icon" viewBox="0 0 674 624" fill="currentColor" aria-hidden="true"><path d="M324.3 203.5c-17.2 4.7-31.3 18.9-35.8 36-.8 3.3-1.5 8.1-1.5 10.7v4.8h-8.7c-14.6.1-21.4 4.9-23.4 16.6-1 6.4-8.9 117.2-9.1 128.2-.1 7.4 1.2 11 5.9 15.4 1.5 1.5 4.1 3.2 5.6 3.7 1.9.8 28.1 1.1 80.8 1.1 76.3 0 78.1 0 81.9-2 4.4-2.2 8.6-7.8 9.5-12.5.8-3.8-8.2-131.7-9.5-136.7-2.6-9.3-10-13.7-23.2-13.8H388v-4.8c0-6.2-2.3-14.8-5.6-21.5-3.4-6.7-14.4-17.7-21.1-21.1-10.9-5.5-25.7-7.1-37-4.1m27.8 17.7c11 5.1 18.8 16.2 19.7 28l.4 5.8h-69.5l.7-5.7c1.6-13.9 11.1-25.7 23.9-29.9 6.7-2.2 18.1-1.3 24.8 1.8M287.5 292c0 11.3.1 21.1.3 21.7.1.7 1.1 2.2 2.2 3.3 2.8 2.8 7.5 2.6 10.5-.5 2.5-2.4 2.5-2.4 2.5-24V271h69v20.6c0 20.8.4 23.4 3.9 26.1 2.6 2 7 1.5 9.6-1.2 2.5-2.4 2.5-2.4 2.5-24V271h8c5.6 0 8.2.4 8.5 1.2.8 2.4 9.5 129.9 9 130.9-.4.5-30.6.9-76 .9-59.3 0-75.4-.3-75.7-1.3-.7-1.9 8.6-129 9.6-130.5.5-.9 3-1.2 8.4-1l7.7.3z"/></svg>';
+    private const CART_ICON_SVG = '<svg class="freeio-cart-icon" width="32" height="32" viewBox="190 170 300 300" fill="currentColor" aria-hidden="true"><path d="M324.3 203.5c-17.2 4.7-31.3 18.9-35.8 36-.8 3.3-1.5 8.1-1.5 10.7v4.8h-8.7c-14.6.1-21.4 4.9-23.4 16.6-1 6.4-8.9 117.2-9.1 128.2-.1 7.4 1.2 11 5.9 15.4 1.5 1.5 4.1 3.2 5.6 3.7 1.9.8 28.1 1.1 80.8 1.1 76.3 0 78.1 0 81.9-2 4.4-2.2 8.6-7.8 9.5-12.5.8-3.8-8.2-131.7-9.5-136.7-2.6-9.3-10-13.7-23.2-13.8H388v-4.8c0-6.2-2.3-14.8-5.6-21.5-3.4-6.7-14.4-17.7-21.1-21.1-10.9-5.5-25.7-7.1-37-4.1m27.8 17.7c11 5.1 18.8 16.2 19.7 28l.4 5.8h-69.5l.7-5.7c1.6-13.9 11.1-25.7 23.9-29.9 6.7-2.2 18.1-1.3 24.8 1.8M287.5 292c0 11.3.1 21.1.3 21.7.1.7 1.1 2.2 2.2 3.3 2.8 2.8 7.5 2.6 10.5-.5 2.5-2.4 2.5-2.4 2.5-24V271h69v20.6c0 20.8.4 23.4 3.9 26.1 2.6 2 7 1.5 9.6-1.2 2.5-2.4 2.5-2.4 2.5-24V271h8c5.6 0 8.2.4 8.5 1.2.8 2.4 9.5 129.9 9 130.9-.4.5-30.6.9-76 .9-59.3 0-75.4-.3-75.7-1.3-.7-1.9 8.6-129 9.6-130.5.5-.9 3-1.2 8.4-1l7.7.3z"/></svg>';
 
     /**
      * Шорткод [freeio_cart_link] — ссылка на корзину с иконкой и количеством (для шапки).
@@ -227,7 +226,7 @@ final class Service_Cart {
             'package' => '',
             'addons' => '',
             'text' => '',
-            'class' => 'freeio-add-to-cart-btn button',
+            'class' => 'button product_type_simple add_to_cart_button freeio-add-to-cart-btn',
         ], $atts, 'freeio_add_to_cart');
 
         $service_id = absint($atts['service_id']);
@@ -242,7 +241,7 @@ final class Service_Cart {
 
         ob_start();
         ?>
-        <form class="freeio-add-to-cart-form" method="post" action="">
+        <form class="freeio-add-to-cart-form" method="post" action="" data-cart-url="<?php echo esc_url($this->get_cart_url()); ?>">
             <input type="hidden" name="action" value="<?php echo esc_attr(ADD_TO_CART_ACTION); ?>">
             <?php wp_nonce_field(NONCE_ACTION, '_wpnonce'); ?>
             <input type="hidden" name="service_id" value="<?php echo esc_attr((string) $service_id); ?>">
@@ -255,7 +254,9 @@ final class Service_Cart {
                 echo '<input type="hidden" name="service_addons[]" value="' . esc_attr((string) $addon_id) . '">';
             }
             ?>
-            <button type="submit" name="freeio_add_to_cart" class="<?php echo $css_class; ?>"><?php echo esc_html($button_text); ?></button>
+            <button type="submit" class="<?php echo $css_class; ?>">
+                <span class="freeio-btn-text"><?php echo esc_html($button_text); ?></span><i class="flaticon-right-up next"></i>
+            </button>
         </form>
         <?php
         return (string) ob_get_clean();

@@ -43,25 +43,44 @@ msgid "Ошибка безопасности."
 msgstr "Security error."
 
 #: includes/class-checkout-handler.php
-msgid "Freeio Services Order"
-msgstr "Freeio Services Order"
-
-#: includes/class-checkout-handler.php
 msgid "Корзина услуг пуста."
 msgstr "Service cart is empty."
 
 #: includes/class-checkout-handler.php
-#, php-format
-msgid "Услуга #%1$d"
-msgstr "Service #%1$d"
+msgid "Изображение"
+msgstr "Image"
 
 #: includes/class-checkout-handler.php
-msgid "Итого:"
-msgstr "Total:"
+msgid "Название"
+msgstr "Product Name"
 
 #: includes/class-checkout-handler.php
-msgid "Proceed to Payment"
-msgstr "Proceed to Payment"
+msgid "Цена"
+msgstr "Price"
+
+#: includes/class-checkout-handler.php
+msgid "Кол-во"
+msgstr "Quantity"
+
+#: includes/class-checkout-handler.php
+msgid "Удалить"
+msgstr "Remove"
+
+#: includes/class-checkout-handler.php
+msgid "Итоги корзины"
+msgstr "Cart totals"
+
+#: includes/class-checkout-handler.php
+msgid "Подитог"
+msgstr "Subtotal"
+
+#: includes/class-checkout-handler.php
+msgid "Итого"
+msgstr "Total"
+
+#: includes/class-checkout-handler.php
+msgid "Перейти к оплате"
+msgstr "Proceed to Checkout"
 
 #: includes/class-checkout-handler.php
 msgid "Услуга добавлена в корзину."
@@ -74,6 +93,10 @@ msgstr "Invalid service ID."
 #: includes/class-checkout-handler.php
 msgid "Не удалось рассчитать цену услуги."
 msgstr "Could not calculate service price."
+
+#: includes/class-service-cart.php
+msgid "Смотреть корзину"
+msgstr "View cart"
 
 #: includes/class-service-cart.php
 msgid "Добавляем…"

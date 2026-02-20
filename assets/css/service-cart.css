@@ -15,10 +15,8 @@
     color: inherit;
 }
 .freeio-cart-icon {
-    width: 32px !important;
-    height: 32px !important;
-    min-width: 32px;
-    min-height: 32px;
+    width: 20px;
+    height: 20px;
     vertical-align: middle;
     flex-shrink: 0;
     display: inline-block;
