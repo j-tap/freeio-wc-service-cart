@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Plugin Name: Freeio WC Service Cart
  * Description: Интеграция корзины услуг Freeio с WooCommerce (единая оплата нескольких услуг).
- * Version: 0.1.1
+ * Version: 0.1.2
  * Requires at least: 6.0
  * Requires PHP: 8.1
  * WC requires at least: 8.0
@@ -20,11 +20,25 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-const PLUGIN_VERSION = '0.1.1';
+define(
+    __NAMESPACE__ . '\PLUGIN_VERSION',
+    (static function (): string {
+        $readme = __DIR__ . '/readme.txt';
+        if (is_file($readme) && ($content = file_get_contents($readme)) !== false) {
+            if (preg_match('/^Stable tag:\s*(.+)$/mi', $content, $m)) {
+                return trim($m[1]);
+            }
+        }
+        return '0.0.0';
+    })()
+);
 const META_SERVICE_CART = 'freeio_service_cart';
 const SESSION_KEY = 'freeio_service_cart';
 const ADD_TO_CART_ACTION = 'freeio_add_service_to_cart';
 const NONCE_ACTION = 'freeio_add_service_to_cart';
+const PROXY_PRODUCT_OPTION = 'freeio_wc_service_proxy_product_id';
+const PROXY_PRODUCT_SKU = '_freeio-service-proxy';
+const CART_ITEM_META_KEY = '_freeio_service';
 
 final class Plugin {
 
@@ -106,14 +120,45 @@ final class Plugin {
     }
 }
 
+function ensure_proxy_product(): int {
+    $existing_id = (int) get_option(PROXY_PRODUCT_OPTION, 0);
+    if ($existing_id > 0 && get_post_status($existing_id) === 'publish') {
+        return $existing_id;
+    }
+
+    $product = new \WC_Product_Simple();
+    $product->set_name('Freeio Service');
+    $product->set_status('publish');
+    $product->set_catalog_visibility('hidden');
+    $product->set_sku(PROXY_PRODUCT_SKU);
+    $product->set_price(0);
+    $product->set_regular_price(0);
+    $product->set_virtual(true);
+    $product->set_sold_individually(false);
+    $product->save();
+
+    $id = $product->get_id();
+    update_option(PROXY_PRODUCT_OPTION, $id);
+    return $id;
+}
+
 register_activation_hook(__FILE__, function (): void {
     require_once __DIR__ . '/includes/class-service-cart.php';
     Service_Cart::register_rewrite_rule();
     flush_rewrite_rules();
+
+    if (class_exists('WooCommerce')) {
+        ensure_proxy_product();
+    }
 });
 
 register_deactivation_hook(__FILE__, function (): void {
     flush_rewrite_rules();
+    $proxy_id = (int) get_option(PROXY_PRODUCT_OPTION, 0);
+    if ($proxy_id > 0) {
+        wp_delete_post($proxy_id, true);
+        delete_option(PROXY_PRODUCT_OPTION);
+    }
 });
 
 Plugin::instance();
