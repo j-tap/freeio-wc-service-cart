@@ -1,0 +1,120 @@
+# Russian translation for Freeio WC Service Cart
+msgid ""
+msgstr ""
+"Project-Id-Version: Freeio WC Service Cart 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-02-19T12:00+0000\n"
+"PO-Revision-Date: 2025-02-19 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Russian\n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: freeio-wc-service-cart.php
+msgid "Freeio WC Service Cart требует активную тему Freeio."
+msgstr "Freeio WC Service Cart требует активную тему Freeio."
+
+#: freeio-wc-service-cart.php
+msgid "Freeio WC Service Cart требует активный WooCommerce."
+msgstr "Freeio WC Service Cart требует активный WooCommerce."
+
+#: includes/class-service-cart.php
+msgid "Добавить в корзину"
+msgstr "Добавить в корзину"
+
+#: includes/class-service-cart.php
+msgid "Корзина"
+msgstr "Корзина"
+
+#: includes/class-service-cart.php
+#, php-format
+msgid "Корзина (%d)"
+msgstr "Корзина (%d)"
+
+#: includes/class-service-cart.php
+msgid "Ошибка безопасности. Обновите страницу и попробуйте снова."
+msgstr "Ошибка безопасности. Обновите страницу и попробуйте снова."
+
+#: includes/class-checkout-handler.php
+msgid "Ошибка безопасности."
+msgstr "Ошибка безопасности."
+
+#: includes/class-checkout-handler.php
+msgid "Freeio Services Order"
+msgstr "Заказ услуг Freeio"
+
+#: includes/class-checkout-handler.php
+msgid "Корзина услуг пуста."
+msgstr "Корзина услуг пуста."
+
+#: includes/class-checkout-handler.php
+#, php-format
+msgid "Услуга #%1$d"
+msgstr "Услуга #%1$d"
+
+#: includes/class-checkout-handler.php
+msgid "Итого:"
+msgstr "Итого:"
+
+#: includes/class-checkout-handler.php
+msgid "Proceed to Payment"
+msgstr "Перейти к оплате"
+
+#: includes/class-checkout-handler.php
+msgid "Услуга добавлена в корзину."
+msgstr "Услуга добавлена в корзину."
+
+#: includes/class-checkout-handler.php
+msgid "Неверный идентификатор услуги."
+msgstr "Неверный идентификатор услуги."
+
+#: includes/class-checkout-handler.php
+msgid "Не удалось рассчитать цену услуги."
+msgstr "Не удалось рассчитать цену услуги."
+
+#: includes/class-service-cart.php
+msgid "Добавляем…"
+msgstr "Добавляем…"
+
+#: includes/class-service-cart.php
+msgid "Добавлено!"
+msgstr "Добавлено!"
+
+#: includes/class-service-cart.php
+msgid "Внутренняя ошибка сервера."
+msgstr "Внутренняя ошибка сервера."
+
+#: includes/class-service-cart.php
+msgid "Услуга не указана."
+msgstr "Услуга не указана."
+
+#: includes/class-service-cart.php
+msgid "Не удалось рассчитать стоимость услуги."
+msgstr "Не удалось рассчитать стоимость услуги."
+
+#: includes/class-admin-settings.php
+msgid "Freeio Service Cart"
+msgstr "Freeio Service Cart"
+
+#: includes/class-admin-settings.php
+msgid "Service Cart"
+msgstr "Корзина услуг"
+
+#: includes/class-admin-settings.php
+msgid "Настройки сохранены."
+msgstr "Настройки сохранены."
+
+#: includes/class-admin-settings.php
+msgid "Страница корзины услуг"
+msgstr "Страница корзины услуг"
+
+#: includes/class-admin-settings.php
+msgid "— Выберите страницу —"
+msgstr "— Выберите страницу —"
+
+#: includes/class-admin-settings.php
+msgid "Страница, на которой размещён шорткод [freeio_service_cart]. После добавления услуги в корзину пользователь перенаправляется на эту страницу."
+msgstr "Страница, на которой размещён шорткод [freeio_service_cart]. После добавления услуги в корзину пользователь перенаправляется на эту страницу."

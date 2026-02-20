@@ -1,0 +1,36 @@
+.freeio-add-to-cart-form button.freeio-adding {
+    opacity: .6;
+    pointer-events: none;
+}
+.freeio-add-to-cart-form button.freeio-added {
+    opacity: 1;
+}
+
+.freeio-cart-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+}
+.freeio-cart-icon {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px;
+    min-height: 32px;
+    vertical-align: middle;
+    flex-shrink: 0;
+    display: inline-block;
+}
+.freeio-cart-link-count {
+    font-size: .75em;
+    font-weight: 600;
+    line-height: 1;
+    min-width: 1.6em;
+    text-align: center;
+    padding: 2px 4px;
+    border-radius: 9999px;
+    background: var(--freeio-cart-badge-bg, #e74c3c);
+    color: var(--freeio-cart-badge-color, #fff);
+}

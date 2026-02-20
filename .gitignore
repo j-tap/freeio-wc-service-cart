@@ -1,0 +1,29 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE / editor
+.idea/
+.vscode/
+.cursor/
+.phpstorm/
+*.sublime-*
+*.swp
+*.swo
+*~
+
+# PHP
+vendor/
+.phpunit.result.cache
+
+# Logs & env
+*.log
+.env
+.env.local
+
+# Build / assets (if added later)
+node_modules/
+npm-debug.log*
+
+# Release archive (output of make-release.sh)
+freeio-wc-service-cart-*.zip
