@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Страница настроек в админке: выбор страницы корзины услуг.
+ * Admin settings page: select the service cart page.
  */
 final class Admin_Settings {
 

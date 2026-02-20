@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * После успешной оплаты WC order: синхронизация с Freeio (создание заказов Freeio, связь с WC order).
+ * After successful WC order payment: sync with Freeio (create Freeio orders, link to WC order).
  */
 final class Order_Sync {
 

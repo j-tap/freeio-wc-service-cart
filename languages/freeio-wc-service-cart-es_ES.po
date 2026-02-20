@@ -118,6 +118,19 @@ msgstr "Servicio no especificado."
 msgid "Не удалось рассчитать стоимость услуги."
 msgstr "No se pudo calcular el precio del servicio."
 
+#: includes/class-checkout-handler.php
+msgid "Не удалось создать заказ. Попробуйте ещё раз."
+msgstr "No se pudo crear el pedido. Inténtelo de nuevo."
+
+#: includes/class-checkout-handler.php
+#, php-format
+msgid "Услуга #%d"
+msgstr "Servicio #%d"
+
+#: includes/class-checkout-handler.php
+msgid "Не удалось перенести услуги в корзину. Попробуйте ещё раз."
+msgstr "No se pudieron transferir los servicios al carrito. Inténtelo de nuevo."
+
 #: includes/class-admin-settings.php
 msgid "Freeio Service Cart"
 msgstr "Freeio Service Cart"

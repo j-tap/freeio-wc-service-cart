@@ -1,73 +1,73 @@
 # Freeio WC Service Cart
 
-Плагин интеграции корзины услуг Freeio с WooCommerce: несколько услуг — одна оплата. WooCommerce используется только как платёжный слой, заказы Freeio создаются после оплаты.
+Plugin that integrates the Freeio service cart with WooCommerce: multiple services, single payment. WooCommerce is used only as the payment layer; Freeio orders are created after payment.
 
-## Требования
+## Requirements
 
 - WordPress 6+
 - WooCommerce 8+
 - PHP 8.1+
-- Тема **Freeio** (обязательно; без неё плагин не активируется)
+- **Freeio** theme (required; the plugin will not activate without it)
 
-## Установка
+## Installation
 
-1. Скопировать папку `freeio-wc-service-cart` в `wp-content/plugins/`.
-2. Активировать плагин в админке WordPress.
-3. Создать страницу с шорткодом `[freeio_service_cart]`.
-4. Указать эту страницу в настройках: **Freeio Settings → Service Cart** — выбрать страницу корзины в выпадающем списке и сохранить.
+1. Copy the `freeio-wc-service-cart` folder to `wp-content/plugins/`.
+2. Activate the plugin in the WordPress admin.
+3. Create a page with the shortcode `[freeio_service_cart]`.
+4. Set that page in settings: **Freeio Settings → Service Cart** — select the cart page from the dropdown and save.
 
-   Родительское меню Freeio в теме имеет slug `freelancer-settings`. Переопределить: `add_filter('freeio_wc_service_cart_settings_parent_slug', fn() => 'другой-slug');`
+   The Freeio parent menu in the theme uses the slug `freelancer-settings`. Override it: `add_filter('freeio_wc_service_cart_settings_parent_slug', fn() => 'other-slug');`
 
-   Альтернатива (через код): опция `freeio_wc_service_cart_page_id`, либо фильтр для URL:
+   Alternative (via code): option `freeio_wc_service_cart_page_id`, or use the URL filter:
 
 ```php
 add_filter('freeio_wc_service_cart_page_url', fn() => 'https://yoursite.com/service-cart/');
 ```
 
-## Добавление услуги в корзину
+## Adding a service to the cart
 
-### Шорткод кнопки
+### Button shortcode
 
-На странице услуги (или в виджете) вставьте:
+On the service page (or in a widget) insert:
 
 ```
 [freeio_add_to_cart service_id="123"]
 ```
 
-Параметры (все кроме `service_id` опциональны):
+Parameters (all except `service_id` are optional):
 
-| Параметр    | Описание |
-|------------|----------|
-| `service_id` | ID услуги (обязательно) |
-| `package`    | Ключ пакета (service_package) |
-| `addons`    | ID дополнений через запятую, например `addons="1,2,3"` |
-| `text`      | Текст кнопки (по умолчанию «Добавить в корзину») |
-| `class`     | CSS-классы кнопки (по умолчанию `freeio-add-to-cart-btn button`) |
+| Parameter   | Description |
+|------------|-------------|
+| `service_id` | Service ID (required) |
+| `package`    | Package key (service_package) |
+| `addons`     | Comma-separated addon IDs, e.g. `addons="1,2,3"` |
+| `text`       | Button label (default: "Add to cart") |
+| `class`      | CSS classes for the button (default: `freeio-add-to-cart-btn button`) |
 
-Примеры:
+Examples:
 
 ```
 [freeio_add_to_cart service_id="15"]
-[freeio_add_to_cart service_id="15" package="premium" text="Заказать"]
+[freeio_add_to_cart service_id="15" package="premium" text="Order now"]
 [freeio_add_to_cart service_id="15" addons="1,2" class="btn btn-primary"]
 ```
 
-Форма отправляется на **текущую страницу** (страницу услуги). POST перехватывается на самом раннем хуке `init` (приоритет 0), до вывода темы, и выполняется редирект на страницу корзины. Отдельный URL `/freeio-add-to-cart/` не используется при нажатии кнопки — пустая страница по этому адресу на работу кнопки не влияет.
+The form is submitted to the **current page** (the service page). POST is handled on the earliest `init` hook (priority 0), before theme output, and redirects to the cart page. The `/freeio-add-to-cart/` URL is not used when clicking the button; an empty page at that URL does not affect the button.
 
-### Ссылка на корзину в шапке
+### Cart link in the header
 
-Шорткод **`[freeio_cart_link]`** — ссылка на страницу корзины с иконкой и количеством позиций (для шапки/меню).
+Shortcode **`[freeio_cart_link]`** — link to the cart page with icon and item count (for header/menu).
 
-Параметры (все опциональны):
+Parameters (all optional):
 
-| Параметр    | Описание | По умолчанию |
-|------------|----------|--------------|
-| `class`    | CSS-класс ссылки | `freeio-cart-link` |
-| `icon`     | Показать иконку корзины (`yes`/`no`) | `yes` |
-| `show_count` | Показать количество товаров | `yes` |
-| `icon_class` | Класс иконки (в теме Freeio — Flaticon, например `flaticon-shopping-cart`) | `flaticon-shopping-cart` |
+| Parameter   | Description | Default |
+|------------|-------------|---------|
+| `class`    | CSS class for the link | `freeio-cart-link` |
+| `icon`     | Show cart icon (`yes`/`no`) | `yes` |
+| `show_count` | Show item count | `yes` |
+| `icon_class` | Icon class (Freeio theme uses Flaticon, e.g. `flaticon-shopping-cart`) | `flaticon-shopping-cart` |
 
-Примеры:
+Examples:
 
 ```
 [freeio_cart_link]
@@ -75,65 +75,65 @@ add_filter('freeio_wc_service_cart_page_url', fn() => 'https://yoursite.com/serv
 [freeio_cart_link icon_class="flaticon-cart" show_count="no"]
 ```
 
-Иконка выводится как `<span class="freeio-cart-link-icon flaticon-shopping-cart">` — подключается шрифт/стили Flaticon темы. Если в теме другой класс иконки корзины, задайте его в `icon_class`.
+The icon is rendered as inline SVG. If your theme uses a different cart icon class, set it via `icon_class`.
 
-### Своя форма (POST)
+### Custom form (POST)
 
-Форма POST на любой URL с полями:
+POST form to any URL with fields:
 
 - `action=freeio_add_service_to_cart`
-- `_wpnonce` (wp_nonce_field для действия `freeio_add_service_to_cart`)
-- `service_id` (обязательно)
-- `service_package` (опционально)
-- `service_addons[]` (опционально, массив ID дополнений)
+- `_wpnonce` (wp_nonce_field for action `freeio_add_service_to_cart`)
+- `service_id` (required)
+- `service_package` (optional)
+- `service_addons[]` (optional, array of addon IDs)
 
-## Интеграция с Freeio
+## Freeio integration
 
-### Расчёт цены
+### Price calculation
 
-Плагин пытается получить цену через класс `WP_Freeio_Service_Meta` (если есть). Переопределить расчёт можно фильтром:
+The plugin tries to get the price via post meta keys (`_price`, `_service_price`, `_regular_price`, `price`). Override with the filter:
 
 ```php
 add_filter('freeio_wc_service_cart_calculate_price', function ($price, $service_id, $package_key, $addons) {
-    // вернуть (float) цену или null при ошибке
+    // return (float) price or null on error
     return 99.00;
 }, 10, 4);
 ```
 
-### Создание заказов Freeio после оплаты
+### Creating Freeio orders after payment
 
-После успешной оплаты WooCommerce плагин вызывает действие для каждого элемента корзины:
+After successful WooCommerce payment the plugin fires an action for each cart item:
 
 ```php
 add_action('freeio_wc_service_cart_create_freeio_order', function ($cart_item, $wc_order_id, $wc_order) {
     // $cart_item: service_id, package_key, addons, calculated_price
-    // Создать заказ Freeio и сохранить в его meta: wc_order_id = $wc_order_id
+    // Create Freeio order and save in its meta: wc_order_id = $wc_order_id
 }, 10, 3);
 ```
 
-Дополнительно доступны:
+Also available:
 
-- `freeio_wc_service_cart_before_orders_sync` — перед созданием заказов (передаётся $order, $cart).
-- `freeio_wc_service_cart_after_orders_sync` — после создания заказов и очистки корзины.
+- `freeio_wc_service_cart_before_orders_sync` — before creating orders (receives $order, $cart).
+- `freeio_wc_service_cart_after_orders_sync` — after creating orders and clearing the cart.
 
-## Структура элемента корзины
+## Cart item structure
 
 - `service_id` (int)
 - `package_key` (string|null)
 - `addons` (array<int>)
 - `calculated_price` (float)
 
-Одинаковые наборы в корзине не объединяются.
+Duplicate items are not merged in the cart.
 
-## Переводы
+## Translations
 
-Плагин переводится через текстовый домен `freeio-wc-service-cart`. Поддерживаются:
+The plugin uses the text domain `freeio-wc-service-cart`. Supported locales:
 
-- **ru_RU** — русский
-- **en_US** — английский
-- **es_ES** — испанский
+- **ru_RU** — Russian
+- **en_US** — English
+- **es_ES** — Spanish
 
-Файлы переводов: `languages/freeio-wc-service-cart-{locale}.po` и скомпилированные `.mo`. После правки `.po` пересобрать `.mo`:
+Translation files: `languages/freeio-wc-service-cart-{locale}.po` and compiled `.mo`. After editing `.po`, rebuild `.mo`:
 
 ```bash
 msgfmt -o languages/freeio-wc-service-cart-ru_RU.mo languages/freeio-wc-service-cart-ru_RU.po

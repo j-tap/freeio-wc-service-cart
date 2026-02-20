@@ -32,12 +32,10 @@ document.addEventListener('DOMContentLoaded', function () {
             var url = d.cart_url || form.getAttribute('data-cart-url') || '/';
             var text = cfg.viewCartText || 'View cart';
 
-            // заменяем кнопку ссылкой
             var a = document.createElement('a');
             a.href = url;
-            a.className = 'button product_type_simple add_to_cart_button freeio-view-cart-btn';
-            a.innerHTML = '<span class="freeio-btn-text">' + text + '</span>' +
-              '<i class="flaticon-right-up next"></i>';
+            a.className = (btn.className || '').replace(/\s*freeio-adding\s*/, ' ').trim() + ' btn btn-theme btn-inverse w-100 mt-6 freeio-view-cart-btn';
+            a.innerHTML = '<span class="freeio-btn-text">' + text + '</span>';
             btn.parentNode.insertBefore(a, btn);
             btn.style.display = 'none';
           } else {

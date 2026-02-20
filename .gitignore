@@ -7,6 +7,7 @@ Thumbs.db
 .vscode/
 .cursor/
 .phpstorm/
+.dev
 *.sublime-*
 *.swp
 *.swo

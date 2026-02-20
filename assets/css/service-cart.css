@@ -1,9 +1,42 @@
+.freeio-service-cart {
+    .woocommerce button.remove {
+        padding: 0;
+        margin: auto;
+        color: #dc3545;
+        background-color: #FFEDE8 !important;
+    }
+    .cart_item button.remove {
+        margin: 0 0 15px;
+        display: inline-block;
+        color: var(--freeio-text-color) !important;
+    }
+}
+
+.product-remove .remove {
+    background-color: #FFEDE8;
+}
+
 .freeio-add-to-cart-form button.freeio-adding {
     opacity: .6;
     pointer-events: none;
 }
 .freeio-add-to-cart-form button.freeio-added {
     opacity: 1;
+}
+
+.freeio-view-cart-btn {
+    display: inline-block;
+    text-decoration: none;
+    background: var(--freeio-theme-hover-color);
+    color: inherit;
+}
+.freeio-view-cart-btn:hover {
+    background: var(--freeio-theme-hover-color);
+    color: inherit;
+    opacity: 0.9;
+}
+.freeio-view-cart-btn .next {
+    display: none;
 }
 
 .freeio-cart-link {

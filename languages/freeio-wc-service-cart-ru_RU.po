@@ -118,6 +118,19 @@ msgstr "Услуга не указана."
 msgid "Не удалось рассчитать стоимость услуги."
 msgstr "Не удалось рассчитать стоимость услуги."
 
+#: includes/class-checkout-handler.php
+msgid "Не удалось создать заказ. Попробуйте ещё раз."
+msgstr "Не удалось создать заказ. Попробуйте ещё раз."
+
+#: includes/class-checkout-handler.php
+#, php-format
+msgid "Услуга #%d"
+msgstr "Услуга #%d"
+
+#: includes/class-checkout-handler.php
+msgid "Не удалось перенести услуги в корзину. Попробуйте ещё раз."
+msgstr "Не удалось перенести услуги в корзину. Попробуйте ещё раз."
+
 #: includes/class-admin-settings.php
 msgid "Freeio Service Cart"
 msgstr "Freeio Service Cart"

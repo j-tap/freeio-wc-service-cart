@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Сборка ZIP, коммит, тег, пуш и создание GitHub Release.
-# Версия — только в readme.txt (строка "Stable tag: X.Y.Z").
-# Использование: ./make-release.sh [версия]
-#   без аргумента — версия берётся из readme.txt
-#   с аргументом   — сначала в readme.txt пишется эта версия, затем релиз
-# Требует: git, gh (GitHub CLI), composer, zip
+# Build ZIP, commit, tag, push and create GitHub Release.
+# Version is read from readme.txt only (line "Stable tag: X.Y.Z").
+# Usage: ./make-release.sh [version]
+#   no argument — version is read from readme.txt
+#   with argument — write that version to readme.txt first, then release
+# Requires: git, gh (GitHub CLI), composer, zip
 
 set -e
 NAME="freeio-wc-service-cart"
@@ -17,7 +17,7 @@ if [[ ! -f "$ROOT/$MAIN_PHP" ]] || [[ ! -f "$README" ]]; then
   exit 1
 fi
 
-# Версия: из аргумента или из readme.txt
+# Version: from argument or from readme.txt
 if [[ -n "$1" ]]; then
   if [[ "$OSTYPE" == "darwin"* ]]; then SED_I=(-i ''); else SED_I=(-i); fi
   sed "${SED_I[@]}" "s/^Stable tag: .*/Stable tag: $1/" "$README"
@@ -31,7 +31,7 @@ fi
 OUT="${NAME}-${VERSION}.zip"
 TAG="v${VERSION}"
 
-# Проверка gh
+# Check gh
 if ! command -v gh &>/dev/null; then
   echo "Install GitHub CLI: https://cli.github.com/  (brew install gh)"
   exit 1
@@ -41,13 +41,12 @@ if ! gh auth status &>/dev/null; then
   exit 1
 fi
 
-# Подставить версию из readme.txt в главный файл плагина
+# Sync version from readme.txt into main plugin file header
 echo "Version: $VERSION (from readme.txt)"
 if [[ "$OSTYPE" == "darwin"* ]]; then SED_I=(-i ''); else SED_I=(-i); fi
 sed "${SED_I[@]}" "s/^ \* Version: .*/ * Version: $VERSION/" "$ROOT/$MAIN_PHP"
-sed "${SED_I[@]}" "s/const PLUGIN_VERSION = '[^']*';/const PLUGIN_VERSION = '$VERSION';/" "$ROOT/$MAIN_PHP"
 
-# Сборка ZIP (composer — по желанию, если есть composer.json)
+# Build ZIP (composer optional if composer.json present)
 if [[ -f "$ROOT/composer.json" ]] && [[ ! -f "$ROOT/vendor/autoload.php" ]]; then
   echo "Running composer install --no-dev..."
   (cd "$ROOT" && composer install --no-dev --quiet) || { echo "Run: composer install --no-dev"; exit 1; }
@@ -61,7 +60,7 @@ cd "$TMP"
 zip -r "$ROOT/$OUT" "$NAME" -x "*.DS_Store" -q
 echo "Built: $OUT"
 
-# Git: коммит версии, тег, пуш, релиз
+# Git: commit version, tag, push, release
 cd "$ROOT"
 if [[ -n $(git status --porcelain "$MAIN_PHP" readme.txt) ]]; then
   git add "$MAIN_PHP" readme.txt
