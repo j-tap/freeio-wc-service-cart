@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Plugin Name: Freeio WC Service Cart
  * Description: Интеграция корзины услуг Freeio с WooCommerce (единая оплата нескольких услуг).
- * Version: 0.1.0
+ * Version: 0.3.0
  * Requires at least: 6.0
  * Requires PHP: 8.1
  * WC requires at least: 8.0
@@ -20,7 +20,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-const PLUGIN_VERSION = '0.1.0';
+const PLUGIN_VERSION = '0.3.0';
 const META_SERVICE_CART = 'freeio_service_cart';
 const SESSION_KEY = 'freeio_service_cart';
 const ADD_TO_CART_ACTION = 'freeio_add_service_to_cart';
