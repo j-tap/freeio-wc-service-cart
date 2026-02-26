@@ -285,13 +285,13 @@ final class Service_Cart {
         nocache_headers();
 
         if (!headers_sent()) {
-            wp_redirect($url, 302);
+            wp_safe_redirect($url, 302);
             exit;
         }
 
         $safe = esc_url($url);
         echo '<script>window.location.replace(' . wp_json_encode($safe) . ');</script>';
-        echo '<noscript><meta http-equiv="refresh" content="0;url=' . $safe . '"></noscript>';
+        echo '<noscript><meta http-equiv="refresh" content="' . esc_attr('0;url=' . $safe) . '"></noscript>';
         exit;
     }
 
