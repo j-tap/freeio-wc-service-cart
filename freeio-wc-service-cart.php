@@ -5,8 +5,9 @@ declare(strict_types=1);
 /**
  * Plugin Name: Freeio WC Service Cart
  * Description: Integrates Freeio service cart with WooCommerce (single payment for multiple services).
- * Version: 1.0.0
+ * Version: 1.0.1
  * Plugin URI: https://github.com/j-tap/freeio-wc-service-cart
+ * GitHub URI: https://github.com/j-tap/freeio-wc-service-cart
  * Requires at least: 6.0
  * Requires PHP: 8.1
  * WC requires at least: 8.0
@@ -20,6 +21,12 @@ namespace FreeioWcServiceCart;
 
 if (!defined('ABSPATH')) {
     exit;
+}
+
+$puc_file = __DIR__ . '/vendor/yahnis-elsts/plugin-update-checker/plugin-update-checker.php';
+if (is_readable($puc_file)) {
+    require_once $puc_file;
+    \YahnisElsts\PluginUpdateChecker\v5\PucFactory::buildFromHeader(__FILE__);
 }
 
 define(
