@@ -122,6 +122,10 @@ msgstr "Не удалось рассчитать стоимость услуги
 msgid "Нужно авторизоваться для покупки."
 msgstr "Нужно авторизоваться для покупки."
 
+#: includes/class-service-cart.php
+msgid "You do not have permission to buy this service. Please log in to continue."
+msgstr "У вас нет разрешения на покупку этой услуги. Войдите, чтобы продолжить."
+
 #: includes/class-checkout-handler.php
 msgid "Не удалось создать заказ. Попробуйте ещё раз."
 msgstr "Не удалось создать заказ. Попробуйте ещё раз."

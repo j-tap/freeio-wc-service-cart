@@ -1,3 +1,40 @@
+function showFreeioPopupMessage(text) {
+  var id = 'wp-freeio-popup-message';
+  var popup = document.getElementById(id);
+  if (!popup) {
+    popup = document.createElement('div');
+    popup.id = id;
+    popup.className = 'animated';
+    popup.setAttribute('aria-live', 'polite');
+    popup.innerHTML = '<div class="message-inner alert bg-warning">' + escapeHtml(text) + '</div>';
+    (document.body || document.documentElement).appendChild(popup);
+  } else {
+    var inner = popup.querySelector('.message-inner');
+    if (inner) {
+      inner.textContent = text;
+    } else {
+      popup.textContent = text;
+    }
+  }
+  popup.className = 'animated fadeInRight';
+  popup.style.display = '';
+  clearTimeout(popup._hideTimer);
+  popup._hideTimer = setTimeout(function () {
+    popup.className = 'animated delay-2s fadeOutRight';
+    clearTimeout(popup._hideTimer);
+    popup._hideTimer = setTimeout(function () {
+      popup.style.display = 'none';
+      popup.className = 'animated';
+    }, 2500);
+  }, 2500);
+}
+
+function escapeHtml(str) {
+  var div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   var cfg = window.freeioServiceCart;
   if (!cfg || !cfg.ajaxUrl) return;
@@ -7,15 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
       e.preventDefault();
 
       if (cfg.requireLogin && !cfg.isLoggedIn) {
-        var btn = form.querySelector('button[type="submit"]');
-        var span = btn && btn.querySelector('.freeio-btn-text');
-        if (span) {
-          var originalText = span.textContent;
-          span.textContent = cfg.loginRequiredMessage || 'Нужно авторизоваться для покупки.';
-          setTimeout(function () {
-            span.textContent = originalText;
-          }, 3000);
-        }
+        showFreeioPopupMessage(cfg.loginRequiredPopupMessage || 'You do not have permission to buy this service. Please log in to continue.');
         return;
       }
 

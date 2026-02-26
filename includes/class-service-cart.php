@@ -190,6 +190,7 @@ final class Service_Cart {
             'requireLogin' => $this->is_login_required_for_checkout(),
             'isLoggedIn' => is_user_logged_in(),
             'loginRequiredMessage' => __('Нужно авторизоваться для покупки.', 'freeio-wc-service-cart'),
+            'loginRequiredPopupMessage' => __('You do not have permission to buy this service. Please log in to continue.', 'freeio-wc-service-cart'),
         ]);
     }
 

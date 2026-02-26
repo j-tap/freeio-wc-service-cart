@@ -65,3 +65,19 @@
     background: var(--freeio-cart-badge-bg, #e74c3c);
     color: var(--freeio-cart-badge-color, #fff);
 }
+
+#wp-freeio-popup-message {
+    position: fixed;
+    right: 20px;
+    top: 100px;
+    z-index: 999999;
+    max-width: 400px;
+}
+#wp-freeio-popup-message .message-inner.alert.bg-warning {
+    margin: 0;
+    padding: 12px 18px;
+    border-radius: 6px;
+    background: #f0ad4e;
+    color: #fff;
+    border: none;
+}
