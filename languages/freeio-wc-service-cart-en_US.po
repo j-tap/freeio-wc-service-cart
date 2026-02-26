@@ -118,6 +118,10 @@ msgstr "Service not specified."
 msgid "Не удалось рассчитать стоимость услуги."
 msgstr "Could not calculate service price."
 
+#: includes/class-service-cart.php includes/class-checkout-handler.php
+msgid "Нужно авторизоваться для покупки."
+msgstr "You need to log in to make a purchase."
+
 #: includes/class-checkout-handler.php
 msgid "Не удалось создать заказ. Попробуйте ещё раз."
 msgstr "Could not create order. Please try again."

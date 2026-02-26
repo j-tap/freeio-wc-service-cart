@@ -106,6 +106,14 @@ final class Service_Cart {
             ];
         }
 
+        if ($this->is_login_required_for_checkout() && !is_user_logged_in()) {
+            return [
+                'success' => false,
+                'code' => 'login_required',
+                'message' => __('Нужно авторизоваться для покупки.', 'freeio-wc-service-cart'),
+            ];
+        }
+
         $service_id = isset($_POST['service_id']) ? absint($_POST['service_id']) : 0;
         if ($service_id <= 0) {
             return [
@@ -179,6 +187,9 @@ final class Service_Cart {
             'action' => ADD_TO_CART_ACTION,
             'addingText' => __('Добавляем…', 'freeio-wc-service-cart'),
             'viewCartText' => __('Смотреть корзину', 'freeio-wc-service-cart'),
+            'requireLogin' => $this->is_login_required_for_checkout(),
+            'isLoggedIn' => is_user_logged_in(),
+            'loginRequiredMessage' => __('Нужно авторизоваться для покупки.', 'freeio-wc-service-cart'),
         ]);
     }
 
@@ -301,6 +312,13 @@ final class Service_Cart {
             }
         }
         return home_url('/');
+    }
+
+    /**
+     * Whether WooCommerce requires the user to be logged in to checkout (guest checkout disabled).
+     */
+    private function is_login_required_for_checkout(): bool {
+        return get_option('woocommerce_enable_guest_checkout', 'yes') !== 'yes';
     }
 
     private const PRICE_META_KEYS = ['_price', '_service_price', '_regular_price', 'price'];

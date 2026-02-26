@@ -38,6 +38,10 @@ msgstr ""
 msgid "Ошибка безопасности. Обновите страницу и попробуйте снова."
 msgstr ""
 
+#: includes/class-service-cart.php includes/class-checkout-handler.php
+msgid "Нужно авторизоваться для покупки."
+msgstr ""
+
 #: includes/class-checkout-handler.php
 msgid "Ошибка безопасности."
 msgstr ""

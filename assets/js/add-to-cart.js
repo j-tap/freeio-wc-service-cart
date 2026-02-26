@@ -6,6 +6,19 @@ document.addEventListener('DOMContentLoaded', function () {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
 
+      if (cfg.requireLogin && !cfg.isLoggedIn) {
+        var btn = form.querySelector('button[type="submit"]');
+        var span = btn && btn.querySelector('.freeio-btn-text');
+        if (span) {
+          var originalText = span.textContent;
+          span.textContent = cfg.loginRequiredMessage || 'Нужно авторизоваться для покупки.';
+          setTimeout(function () {
+            span.textContent = originalText;
+          }, 3000);
+        }
+        return;
+      }
+
       var btn = form.querySelector('button[type="submit"]');
       if (!btn || btn.dataset.busy === '1') return;
       btn.dataset.busy = '1';

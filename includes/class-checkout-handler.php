@@ -347,6 +347,7 @@ final class Checkout_Handler {
                 'invalid_service' => __('Неверный идентификатор услуги.', 'freeio-wc-service-cart'),
                 'price_error' => __('Не удалось рассчитать цену услуги.', 'freeio-wc-service-cart'),
                 'security' => __('Ошибка безопасности. Обновите страницу и попробуйте снова.', 'freeio-wc-service-cart'),
+                'login_required' => __('Нужно авторизоваться для покупки.', 'freeio-wc-service-cart'),
                 'order_error' => __('Не удалось создать заказ. Попробуйте ещё раз.', 'freeio-wc-service-cart'),
                 'transfer_error' => __('Не удалось перенести услуги в корзину. Попробуйте ещё раз.', 'freeio-wc-service-cart'),
             ],
