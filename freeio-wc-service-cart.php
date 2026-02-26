@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Plugin Name: Freeio WC Service Cart
  * Description: Integrates Freeio service cart with WooCommerce (single payment for multiple services).
- * Version: 0.1.3
+ * Version: 0.1.4
  * Requires at least: 6.0
  * Requires PHP: 8.1
  * WC requires at least: 8.0
